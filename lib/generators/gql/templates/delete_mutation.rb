@@ -1,14 +1,15 @@
 module Mutations
   class <%= prefixed_class_name('Delete') %> < Mutations::BaseMutation
+    argument :id, ID, required: true, loads: Types::<%= @model_name %>Type, as: :<%= singular_name %>
+    
     field :<%= singular_name %>, Types::<%= name %>Type, null: true
 
-    argument :id, Int, required: true
-
-    def resolve(id:)
-      model = <%= class_name %>.find(id)
-
-      model.destroy
-      {<%= singular_name %>: model}
+    def resolve(<%= singular_name %>:)
+      <%= singular_name %>.destroy
+      {
+        <%= singular_name %>: model,
+        errors: []
+      }
     end
   end
 end

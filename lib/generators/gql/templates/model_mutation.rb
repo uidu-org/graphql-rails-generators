@@ -1,9 +1,9 @@
 module Mutations
   class <%= prefixed_class_name(mutation_prefix) %> < Mutations::BaseMutation
-    field :<%= singular_name %>, Types::<%= @model_name %>Type, null: true
-
     argument :attributes, Types::Input::<%= @model_name %>Input, required: true
-    argument :id, Int, required: false
+    argument :id, ID, required: false
+
+    field :<%= singular_name %>, Types::<%= @model_name %>Type, null: true
 
     def resolve(attributes:, id: nil)
       model = find_or_build_model(id)
