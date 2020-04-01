@@ -3,7 +3,7 @@
 module Mutations
   class <%= prefixed_class_name('Update') %> < Mutations::BaseMutation
     argument :id, ID, required: true, loads: Types::<%= name %>Type, as: :<%= singular_name %>
-    argument :attributes, Types::Attributes::<%= name %>Input, required: true
+    argument :attributes, Types::Attributes::<%= name %>Attributes, required: true
 
     field :<%= singular_name %>, Types::<%= name %>Type, null: true
     
