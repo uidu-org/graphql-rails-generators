@@ -12,7 +12,7 @@ module Gql
     class_option :namespace, type: :string, default: 'Types::Attributes'
 
     def generate_input_type
-      name = options['name'].nil? ? "#{model_name}Input" : options['name']
+      name = options['name'].nil? ? "#{model_name}Attributes" : options['name']
       superclass = options['superclass']
 
       ignore = ['id', 'created_at', 'updated_at']
