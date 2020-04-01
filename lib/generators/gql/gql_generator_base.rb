@@ -66,6 +66,7 @@ module Gql
     def class_with_fields(namespace, name, superclass, fields, method = 'field')
       wrap_in_namespace(namespace) do |indent|
         klass = []
+        klass << "# frozen_string_literal: true"
         klass << sprintf("%sclass %s < %s", "  " * indent, name, superclass)
 
         fields.each do |field|
