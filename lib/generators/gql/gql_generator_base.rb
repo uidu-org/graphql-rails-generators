@@ -18,7 +18,7 @@ module Gql
         return GraphQL::Types::JSON
       end
       types = {
-        integer: 'Int',
+        integer: 'Integer',
         string: 'String',
         boolean: 'Boolean',
         decimal: 'Float',
@@ -69,7 +69,7 @@ module Gql
         klass << sprintf("%sclass %s < %s", "  " * indent, name, superclass)
 
         fields.each do |field|
-          klass << sprintf("%s%s :%s, %s, null: %s", "  " * (indent + 1), method, field[:name], field[:gql_type], field[:null])
+          klass << sprintf("%s%s :%s, %s, %s", "  " * (indent + 1), method, field[:name], field[:gql_type], method == 'field' ? "null: #{field[:null]}" : "required: false")
         end
 
         klass << sprintf("%send", "  " * indent)
