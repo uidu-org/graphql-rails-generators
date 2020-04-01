@@ -7,7 +7,7 @@ module Mutations
     def resolve(<%= singular_name %>:)
       <%= singular_name %>.destroy
       {
-        <%= singular_name %>: model,
+        <%= singular_name %>: <%= singular_name %>,
         errors: []
       }
     end

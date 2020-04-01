@@ -9,7 +9,7 @@ module Gql
     class_option :name, type: :string
     class_option :include_columns, type: :array, default: []
     class_option :superclass, type: :string, default: 'Types::BaseInputObject'
-    class_option :namespace, type: :string, default: 'Types::Input'
+    class_option :namespace, type: :string, default: 'Types::Attributes'
 
     def generate_input_type
       name = options['name'].nil? ? "#{model_name}Input" : options['name']
