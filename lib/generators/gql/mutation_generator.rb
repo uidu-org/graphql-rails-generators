@@ -18,7 +18,7 @@ module Gql
     def mutation
       file_name = "#{mutation_prefix}_#{singular_name}"
       template('model_mutation.rb', "app/graphql/mutations/#{class_path.join('/')}/#{file_name.underscore}.rb")
-      insert_into_file("app/graphql/types/mutation_type.rb", after: "  class MutationType < Types::BaseObject\n") do
+      inject_into_file("app/graphql/types/mutation_type.rb", after: "  class MutationType < Types::BaseObject\n") do
         "\t\tfield :#{file_name}, mutation: Mutations::#{prefixed_class_name(mutation_prefix)}\n"
       end
     end

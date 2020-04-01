@@ -8,7 +8,7 @@ module Gql
     desc "Generate create, update and delete generators for a model."
 
     def mutations
-      insert_into_file("app/graphql/mutations/base_mutation.rb", before: "\tend\nend") do
+      inject_into_file("app/graphql/mutations/base_mutation.rb", before: "\tend\nend") do
         "def model_errors!(model)\n# define me!\n"
       end
       generate_mutation('update')
@@ -20,7 +20,7 @@ module Gql
     def generate_mutation(prefix)
       file_name = "#{prefix}_#{singular_name}"
       template("#{prefix}_mutation.rb", "app/graphql/mutations/#{class_path.join('/')}/#{file_name.underscore}.rb")
-      insert_into_file("app/graphql/types/mutation_type.rb", after: "  class MutationType < Types::BaseObject\n") do
+      inject_into_file("app/graphql/types/mutation_type.rb", after: "  class MutationType < Types::BaseObject\n") do
         "\t\tfield :#{file_name}, mutation: Mutations::#{prefixed_class_name(prefix)}\n"
       end
     end

@@ -2,7 +2,7 @@
 
 module Mutations
   class <%= prefixed_class_name('Create') %> < Mutations::BaseMutation
-    argument :attributes, Types::Input::<%= name %>Input, required: true
+    argument :attributes, Types::Attributes::<%= name %>Input, required: true
     
     field :<%= singular_name %>, Types::<%= name %>Type, null: true
 
