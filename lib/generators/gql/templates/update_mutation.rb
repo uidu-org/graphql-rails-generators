@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class <%= prefixed_class_name('Update') %> < Mutations::BaseMutation
     argument :id, ID, required: true, loads: Types::<%= name %>Type, as: :<%= singular_name %>

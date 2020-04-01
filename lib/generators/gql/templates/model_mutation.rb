@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mutations
   class <%= prefixed_class_name(mutation_prefix) %> < Mutations::BaseMutation
     argument :attributes, Types::Input::<%= @model_name %>Input, required: true
