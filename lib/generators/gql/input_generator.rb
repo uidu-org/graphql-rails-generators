@@ -17,6 +17,7 @@ module Gql
 
       ignore = ['id', 'created_at', 'updated_at']
       fields = map_model_types(model_name)
+      puts fields.inspect
       fields.reject! { |field| ignore.include?(field[:name]) }
       if options['include_columns'].any?
         fields.reject! { |field| !options['include_columns'].include?(field[:name]) }

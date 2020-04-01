@@ -9,8 +9,15 @@ module Gql
       (class_path + ["#{prefix}_#{file_name}"]).map!(&:camelize).join("::")
     end
 
-    def type_map
-      {
+    def type_map(model_name, col)
+      klass = model_name.constantize
+      if klass.defined_enums.has_key?(col.name)
+        return 'String'
+      end
+      if col.name === 'preferences'
+        return GraphQL::Types::JSON
+      end
+      types = {
         integer: 'Int',
         string: 'String',
         boolean: 'Boolean',
@@ -22,6 +29,7 @@ module Gql
         json: 'GraphQL::Types::JSON',
         jsonb: 'GraphQL::Types::JSON'
       }
+      types[col.type]
     end
 
     def map_model_types(model_name)
@@ -31,12 +39,12 @@ module Gql
 
       klass.columns
         .reject { |col| bt_columns.include?(col.name) }
-        .reject { |col| type_map[col.type].nil? }
+        .reject { |col| type_map(model_name, col).nil? }
         .map do |col|
           {
             name: col.name,
             null: col.null,
-            gql_type: klass.primary_key == col.name ? 'GraphQL::Types::ID' : type_map[col.type]
+            gql_type: klass.primary_key == col.name ? 'GraphQL::Types::ID' : type_map(model_name, col)
           }
         end
     end
