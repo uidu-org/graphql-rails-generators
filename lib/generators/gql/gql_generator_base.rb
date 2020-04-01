@@ -55,13 +55,13 @@ module Gql
       code
     end
 
-    def class_with_fields(namespace, name, superclass, fields, name = 'field')
+    def class_with_fields(namespace, name, superclass, fields, method = 'field')
       wrap_in_namespace(namespace) do |indent|
         klass = []
         klass << sprintf("%sclass %s < %s", "  " * indent, name, superclass)
 
         fields.each do |field|
-          klass << sprintf("%s%s :%s, %s, null: %s", "  " * (indent + 1), name, field[:name], field[:gql_type], field[:null])
+          klass << sprintf("%s%s :%s, %s, null: %s", "  " * (indent + 1), method, field[:name], field[:gql_type], field[:null])
         end
 
         klass << sprintf("%send", "  " * indent)
