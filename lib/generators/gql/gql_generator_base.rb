@@ -56,8 +56,9 @@ module Gql
     def wrap_in_namespace(namespace)
       namespace = namespace.split('::')
       namespace.shift if namespace[0].empty?
-
-      code = namespace.each_with_index.map { |name, i| "  " * i + "module #{name}" }.join("\n")
+      code = "# frozen_string_literal: true"
+      code << "\n"
+      code << namespace.each_with_index.map { |name, i| "  " * i + "module #{name}" }.join("\n")
       code << "\n" << yield(namespace.size) << "\n"
       code << (namespace.size - 1).downto(0).map { |i| "  " * i  + "end" }.join("\n")
       code
@@ -66,7 +67,6 @@ module Gql
     def class_with_fields(namespace, name, superclass, fields, method = 'field')
       wrap_in_namespace(namespace) do |indent|
         klass = []
-        klass << "# frozen_string_literal: true"
         klass << sprintf("%sclass %s < %s", "  " * indent, name, superclass)
 
         fields.each do |field|
