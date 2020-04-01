@@ -7,15 +7,15 @@ module Mutations
     field :<%= singular_name %>, Types::<%= name %>Type, null: true
 
     def resolve(attributes:)
-      model = <%= name %>.new(attributes.to_h)
+      <%= singular_name %> = <%= name %>.new(attributes.to_h)
 
-      if model.save
+      if <%= singular_name %>.save
         {
-          <%= singular_name %>: model,
+          <%= singular_name %>: <%= singular_name %>,
           errors: []
         }
       else
-        model_errors!(model)
+        model_errors!(<%= singular_name %>)
       end
     end
   end
