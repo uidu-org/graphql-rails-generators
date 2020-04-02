@@ -34,11 +34,11 @@ module Gql
 
     def map_model_types(model_name)
       klass = model_name.constantize
-      associations = klass.reflect_on_all_associations(:belongs_to)
-      bt_columns = associations.map(&:foreign_key)
+      # associations = klass.reflect_on_all_associations(:belongs_to)
+      # bt_columns = associations.map(&:foreign_key)
 
+      # .reject { |col| bt_columns.include?(col.name) }
       klass.columns
-        .reject { |col| bt_columns.include?(col.name) }
         .reject { |col| type_map(model_name, col).nil? }
         .map do |col|
           {
