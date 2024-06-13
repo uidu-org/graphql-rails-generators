@@ -71,7 +71,7 @@ module Gql
         klass = []
         klass << sprintf("%sclass %s < %s", "  " * indent, name, superclass)
 
-        klass << sprintf("global_id_field :id")
+        klass << sprintf("%sglobal_id_field :id", "  " * (indent + 1))
 
         fields.each do |field|
           klass << sprintf("%s%s :%s, %s, %s", "  " * (indent + 1), method, field[:name], field[:gql_type], method == 'field' ? "null: #{field[:null]}" : "required: false")
