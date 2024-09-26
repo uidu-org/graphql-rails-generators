@@ -17,6 +17,7 @@ module Gql
     end
 
     protected
+    
     def generate_mutation(prefix)
       file_name = "#{prefix}_#{singular_name}"
       template("#{prefix}_mutation.rb", "app/graphql/mutations/#{class_path.join('/')}/#{file_name.underscore}.rb")

@@ -39,6 +39,7 @@ module Gql
 
       # .reject { |col| bt_columns.include?(col.name) }
       klass.columns
+        .reject { |col| col.name == 'id' }
         .reject { |col| type_map(model_name, col).nil? }
         .map do |col|
           {
@@ -69,6 +70,8 @@ module Gql
       wrap_in_namespace(namespace) do |indent|
         klass = []
         klass << sprintf("%sclass %s < %s", "  " * indent, name, superclass)
+
+        klass << sprintf("%sglobal_id_field :id", "  " * (indent + 1)) if method == 'field'
 
         fields.each do |field|
           klass << sprintf("%s%s :%s, %s, %s", "  " * (indent + 1), method, field[:name], field[:gql_type], method == 'field' ? "null: #{field[:null]}" : "required: false")
